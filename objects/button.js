@@ -5,12 +5,15 @@ import StageObject from '../modules/stage-object.js';
 
 
 const assign   = Object.assign;
+const define   = Object.defineProperties;
 const defaults = {
     behaviour: 'momentary',
     on:  { 1: Events.NAMENUMBERS.start, 2: 60, 3: 0.5 },
     off: { 1: Events.NAMENUMBERS.stop,  2: 60, 3: 0 }
 };
 
+const doubleTapDuration = 0.4;
+const longTapDuration   = 0.5;
 
 const behaviours = {
     momentary: {
@@ -51,7 +54,7 @@ const behaviours = {
         down: (object, state, time) => {
             const data = object.on;
             const outputs = StageObject.getOutputs(object);
-            return setTimeout(() => outputs[0].push(Events.event(time, data[1], 0, data[2], data[3])), 400);
+            return setTimeout(() => outputs[0].push(Events.event(time, data[1], 0, data[2], data[3])), longTapDuration * 1000);
         },
 
         up: (object, state, time) => {
@@ -63,7 +66,7 @@ const behaviours = {
     doubletap: {
         down: (object, state, time) => {
             // Interval is longer than double tap time, return time
-            if (time - state > 0.5) return time;
+            if (time - state > doubleTapDuration) return time;
             const data = object.on;
             const outputs = StageObject.getOutputs(object);
             outputs[0].push(Events.event(time, data[1], 0, data[2], data[3]));
@@ -76,26 +79,26 @@ const behaviours = {
 /* Button */
 
 export default class Button extends StageObject {
-    #state = 0;
-
     constructor(transport, settings) {
         const inputs  = { size: 0 };
         const outputs = { size: 1 };
 
         // extends Object
         super(transport, inputs, outputs, assign({}, defaults, settings));
+
+        // Make .state non enumerable
+        define(this, { state: { value: 0, writable: true }});
     }
 
     down() {
         const behaviour = behaviours[this.behaviour] || behaviours.default;
         const context   = this.transport.context;
-window.c1 = this.transport.context;
-        if (behaviour.down) this.#state = behaviour.down(this, this.#state, context.currentTime);
+        if (behaviour.down) this.state = behaviour.down(this, this.state, context.currentTime);
     }
 
     up() {
         const behaviour = behaviours[this.behaviour] || behaviours.default;
         const context   = this.transport.context;
-        if (behaviour.up) this.#state = behaviour.up(this, this.#state, context.currentTime);
+        if (behaviour.up) this.state = behaviour.up(this, this.state, context.currentTime);
     }
 }
