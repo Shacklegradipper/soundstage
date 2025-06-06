@@ -50,9 +50,9 @@ const createEvent = overload((time, message) => (message[0] >> 4), {
 
 function toEvent(context, e) {
     const time    = timeAtDomTime(context, e.timeStamp);
-    const latency = getPerformanceLatency(context);
+    //const latency = getPerformanceLatency(context);
     const message = e.data;
-    return createEvent(time + latency, message);
+    return createEvent(time /*+ latency*/, message);
 }
 
 const names = Array.from({ length: 16 }, (n, i) => 'Channel ' + (i + 1));
@@ -82,7 +82,8 @@ export default class MIDIIn extends StageObject {
         super(transport, inputs, outputs, settings);
         define(this, { ports: { value: ports }});
 
-        MIDIInputs.each((port) => {
+        const MIDIPorts = new MIDIInputs();
+        MIDIPorts.each((port) => {
             ports[port.id] = port;
             if (this.#portId === port.id) this.port = port.id;
         });
@@ -93,7 +94,6 @@ export default class MIDIIn extends StageObject {
     }
 
     set port(id) {
-        console.log('SET PORT', id);
         this.#portId = id;
         this.#port = this.ports[id];
         if (!this.#port) throw new Error('MIDIIn port "' + id + '" not in ports');

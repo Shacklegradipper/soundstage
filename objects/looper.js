@@ -255,10 +255,12 @@ export default class Looper extends GraphObject {
             return this;
         }
 
-        this.latency = getPerformanceLatency(this.context);
+        Data.of(this).latency = getPerformanceLatency(this.context);
         Data.of(this).recordTime = this.context.currentTime - (
             this.latencyCompensation ? this.latency : 0
         );
+
+console.log('TTTT', this.recordTime, this.latency);
 
         return this;
     }
@@ -273,15 +275,16 @@ export default class Looper extends GraphObject {
         const context   = this.context;
         const transport = this.transport;
 
-// console.log(`Looper.start() sync: ${ this.sync } Loop no: ${ this.loops.length } Transport status: ${ transport.status }`);
+console.log(`Looper.start(${ time || '' }) sync: ${ this.sync } Loop no: ${ this.loops.length } Transport status: ${ transport.status }`);
 
         const startTime = time ? time : context.currentTime - (
             this.latencyCompensation ? this.latency : 0
         );
 
-        const recordTime = this.recordTime;
+        // Were we recording when we called .start()?
+        if (this.recordTime !== undefined) {
+            const recordTime = this.recordTime;
 
-        if (recordTime !== undefined) {
             // Calculate beat duration for the loop
             let beats, buffer, startOffset = 0, loop;
 
@@ -299,7 +302,7 @@ export default class Looper extends GraphObject {
                 startOffset = loop.duration * mod(beats, startBeat) / beats;
             }
             else {
-                const duration = startTime - this.recordTime;
+                const duration = startTime - recordTime;
                 const beats    = this.beats || calculateAutoRate(this.transport.tempo / 60, this.autoBeats, duration);
 
                 loop = createLoop(this.context, this.get('input'), beats, recordTime, startTime, this.fadeDuration);
@@ -313,6 +316,8 @@ export default class Looper extends GraphObject {
                 transport.beat = 0;
                 transport.tempo = rate * 60;
                 transport.start(this.startTime);
+
+console.log('DURATION LOOPER', duration, beats);
             }
 
             // Connect loop into rate and output

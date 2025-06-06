@@ -97,6 +97,8 @@ export function domTimeAtTime(context, time) {
 }
 
 export function getPerformanceLatency(context) {
+    console.log('Quantum', 128 / context.sampleRate, 'baseLatency', context.baseLatency, 'outputLatency', context.outputLatency);
+
         // The time from the earliest we may schedule something to it getting
         // passed to destination, one quantum's duration
     return 128 / context.sampleRate

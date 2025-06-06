@@ -43,7 +43,8 @@ export default class MIDIOut extends StageObject {
         super(transport, inputs, outputs, settings);
         define(this, { ports: { value: ports }});
 
-        MIDIOutputs.each((port) => {
+        const MIDIPorts = new MIDIOutputs();
+        MIDIPorts.each((port) => {
             ports[port.id] = port;
             if (this.#portId === port.id) this.port = port.id;
         });
