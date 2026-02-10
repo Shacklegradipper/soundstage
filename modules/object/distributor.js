@@ -1,7 +1,7 @@
 
 import { Consumer } from 'fn/stream/stream.js';
 import Events, { toName, toNameNumber, toTypeNumber, toRoute } from '../events.js';
-import { ADDRESSBITS, ADDRESSMASK, NAMEBITS, TYPEBITS, NAMETYPEMASK } from '../events/address.js';
+import { ADDRESSBITS, ADDRESSMASK, NAMEBITS, TYPEBITS, NAMETYPEMASK } from 'sequence/events/address.js';
 import { isAudioParam } from '../param.js';
 
 

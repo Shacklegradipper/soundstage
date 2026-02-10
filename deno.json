@@ -1,8 +1,9 @@
 {
     "imports": {
-        "dom/":     "https://cdn.jsdelivr.net/gh/stephband/dom@master/modules/",
-        "fn/":      "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/",
-        "literal/": "https://cdn.jsdelivr.net/gh/stephband/literal@main/",
-        "midi/":    "https://cdn.jsdelivr.net/gh/stephband/midi@master/modules/"
+        "dom/":      "https://cdn.jsdelivr.net/gh/stephband/dom@master/modules/",
+        "fn/":       "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/",
+        "literal/":  "https://cdn.jsdelivr.net/gh/stephband/literal@main/",
+        "midi/":     "https://cdn.jsdelivr.net/gh/stephband/midi@master/modules/",
+        "sequence/": "https://cdn.jsdelivr.net/gh/soundio/sequence@0.1.13/modules/"
     }
 }

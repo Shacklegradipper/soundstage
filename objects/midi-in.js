@@ -11,7 +11,7 @@ import { MIDIInputs }       from 'midi/ports.js';
 import MIDIEvents           from 'midi/events.js';
 import StageObject          from '../modules/stage-object.js';
 import { timeAtDomTime, domTimeAtTime, getPerformanceLatency } from '../modules/context.js';
-import { TYPEBITS }         from '../modules/events/address.js';
+import { TYPEBITS }         from 'sequence/events/address.js';
 import Events               from '../modules/events.js';
 
 const assign = Object.assign;

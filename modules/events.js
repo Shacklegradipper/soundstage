@@ -5,7 +5,7 @@ import { toNoteNumber } from 'midi/note.js';
 import parseGain        from './parse/parse-gain.js';
 import parseFrequency   from './parse/parse-frequency.js';
 //import parseFloat32     from './parse/parse-float-32.js';
-import { parseAddress, toPath, toRoute, toName, toNameNumber, NAMES, NAMENUMBERS, toType, toTypeNumber, TYPES, TYPENUMBERS, TYPEBITS } from './events/address.js';
+import { parseAddress, toPath, toRoute, toName, toNameNumber, NAMES, NAMENUMBERS, toType, toTypeNumber, TYPES, TYPENUMBERS, TYPEBITS } from 'sequence/events/address.js';
 import parseEvents      from './parse/parse-events.js';
 import ceilPower2       from '../modules/dsp/ceil-power-2.js';
 
